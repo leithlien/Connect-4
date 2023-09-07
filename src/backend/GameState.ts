@@ -15,24 +15,19 @@ function checkWin(board: string[][], row: number, col: number): boolean {
   const player = board[row][col]
   const streak = 0
 
-  const values =  Object.values(Direction)
-  values.forEach((value) => {
-    if (recurseFour(board, row, col, player, value as Direction, streak)) {
-      return true
+  for (const key in Direction) {
+    if (isNaN(Number(key))) {
+      if (recurseFour(board, row, col, player, Direction[key as keyof typeof Direction], streak)) {
+        return true
+      }
     }
-  })
+  }
   return false
 }
 
 function recurseFour(board:string[][], row: number, col: number, player: string, direction: Direction, streak: number): boolean {
-  console.log('\n')
-  console.log(row)
-  console.log(col)
-  console.log(direction)
-  console.log(streak)
-  console.log(player)
-  let newRow = row;
-  let newCol = col;
+  let newRow = row
+  let newCol = col
 
   // Four in a row have been found (base case).
   if (streak === 4) {
@@ -47,15 +42,15 @@ function recurseFour(board:string[][], row: number, col: number, player: string,
   streak += 1;
 
   if (direction === Direction.UP || direction === Direction.UPRIGHT || direction === Direction.UPLEFT) {
-      newRow = row - 1;
+      newRow = row - 1
   } else if (direction === Direction.DOWN || direction === Direction.DOWNLEFT || direction === Direction.DOWNRIGHT) {
-      newRow = row + 1;
+      newRow = row + 1
   }
 
   if (direction === Direction.RIGHT || direction === Direction.UPRIGHT || direction === Direction.DOWNRIGHT) {
-      newCol = col + 1;
+      newCol = col + 1
   } else if (direction === Direction.LEFT || direction === Direction.UPLEFT || direction === Direction.DOWNLEFT) {
-      newCol = col - 1;
+      newCol = col - 1
   }
 
   if (newRow < 0 || newRow >= GRIDHEIGHT || newCol < 0 || newCol >= GRIDLENGTH) {

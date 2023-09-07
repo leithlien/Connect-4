@@ -11,10 +11,19 @@ const player2 = new Connect4_1.Player('O');
 (0, PlayTurn_1.playTurn)(board, player1, 0, 3, '');
 (0, PlayTurn_1.playTurn)(board, player2, 0, 2, '');
 (0, Connect4_1.printGrid)(board);
-console.log((0, GameState_1.checkWin)(board, 5, 3));
+winChecker();
 (0, PlayTurn_1.playTurn)(board, player1, 0, 3, '');
 (0, PlayTurn_1.playTurn)(board, player2, 0, 2, '');
 (0, PlayTurn_1.playTurn)(board, player1, 0, 3, '');
 (0, PlayTurn_1.playTurn)(board, player2, 0, 2, '');
 (0, Connect4_1.printGrid)(board);
-console.log((0, GameState_1.checkWin)(board, 5, 3));
+winChecker();
+function winChecker() {
+    for (let i = 0; i < 6; i++) {
+        for (let j = 0; j < 7; j++) {
+            if ((0, GameState_1.checkWin)(board, i, j)) {
+                console.log('win');
+            }
+        }
+    }
+}

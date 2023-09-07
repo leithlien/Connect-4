@@ -12,11 +12,22 @@ playTurn(board, player2, 0, 2, '')
 playTurn(board, player1, 0, 3, '')
 playTurn(board, player2, 0, 2, '')
 printGrid(board)
-console.log(checkWin(board, 5, 3))
+winChecker()
 
 playTurn(board, player1, 0, 3, '')
 playTurn(board, player2, 0, 2, '')
 playTurn(board, player1, 0, 3, '')
 playTurn(board, player2, 0, 2, '')
 printGrid(board)
-console.log(checkWin(board, 5, 3))
+winChecker()
+
+function winChecker() {
+  for(let i = 0; i < 6; i++) {
+    for (let j = 0; j < 7; j++) {
+      if (checkWin(board, i, j)) {
+        console.log('win')
+      }
+    }
+  }
+}
+

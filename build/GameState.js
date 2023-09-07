@@ -20,22 +20,17 @@ function checkWin(board, row, col) {
     }
     const player = board[row][col];
     const streak = 0;
-    const values = Object.values(Direction);
-    values.forEach((value) => {
-        if (recurseFour(board, row, col, player, value, streak)) {
-            return true;
+    for (const key in Direction) {
+        if (isNaN(Number(key))) {
+            if (recurseFour(board, row, col, player, Direction[key], streak)) {
+                return true;
+            }
         }
-    });
+    }
     return false;
 }
 exports.checkWin = checkWin;
 function recurseFour(board, row, col, player, direction, streak) {
-    console.log('\n');
-    console.log(row);
-    console.log(col);
-    console.log(direction);
-    console.log(streak);
-    console.log(player);
     let newRow = row;
     let newCol = col;
     // Four in a row have been found (base case).
