@@ -1,34 +1,30 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.playTurn = void 0;
 const GRIDHEIGHT = 6;
-function playTurn(board, player, row, col, power) {
+function playTurn(board, player, col, power) {
     switch (power) {
         case '':
             playNormal(board, player, col);
             break;
-        case 'pop':
-            popToken(board, row, col);
+        case 'Pop':
+            playPop(board, col);
             break;
-        case 'wall':
+        case 'Wall':
             playWall(board, player, col);
             player.power.wall -= 1;
             break;
-        case 'anvil':
+        case 'Anvil':
             playAnvil(board, player, col);
             player.power.anvil -= 1;
             break;
-        case 'double':
+        case 'Double':
             playNormal(board, player, col);
             player.power.double -= 1;
             break;
-        case 'bomb':
-            popToken(board, row, col);
+        case 'Bomb':
+            playPop(board, col);
             player.power.bomb -= 1;
             break;
     }
 }
-exports.playTurn = playTurn;
 function playNormal(board, player, col) {
     for (let i = 0; i < GRIDHEIGHT; i++) {
         // Bottom row.
@@ -43,7 +39,7 @@ function playNormal(board, player, col) {
         }
     }
 }
-function popToken(board, row, col) {
+function playPop(board, col) {
     // Remove the token.
     board[GRIDHEIGHT - 1][col] = " ";
     // Move all above tokens down one slot.
@@ -74,3 +70,4 @@ function playAnvil(board, player, col) {
     board[GRIDHEIGHT - 1][col] = player.token + 'A';
     return;
 }
+export { playTurn };

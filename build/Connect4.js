@@ -1,12 +1,8 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.printGrid = exports.Player = exports.newGame = void 0;
 const GRIDHEIGHT = 6;
 const GRIDLENGTH = 7;
 function newGame() {
     return Array.from({ length: GRIDHEIGHT }, () => Array(GRIDLENGTH).fill(''));
 }
-exports.newGame = newGame;
 class Player {
     constructor(token) {
         this.token = token;
@@ -18,7 +14,6 @@ class Player {
         };
     }
 }
-exports.Player = Player;
 function printGrid(board) {
     for (let i = 0; i < GRIDHEIGHT; i++) {
         process.stdout.write("| ");
@@ -35,4 +30,4 @@ function printGrid(board) {
     console.log("-----------------");
     console.log("--0-1-2-3-4-5-6--\n");
 }
-exports.printGrid = printGrid;
+export { newGame, Player, printGrid };

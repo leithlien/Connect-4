@@ -1,6 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkWin = void 0;
 const GRIDHEIGHT = 6;
 const GRIDLENGTH = 7;
 var Direction;
@@ -29,7 +26,6 @@ function checkWin(board, row, col) {
     }
     return false;
 }
-exports.checkWin = checkWin;
 function recurseFour(board, row, col, player, direction, streak) {
     let newRow = row;
     let newCol = col;
@@ -59,3 +55,4 @@ function recurseFour(board, row, col, player, direction, streak) {
     }
     return recurseFour(board, newRow, newCol, player, direction, streak);
 }
+export { checkWin };

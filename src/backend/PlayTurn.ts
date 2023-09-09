@@ -2,28 +2,28 @@ const GRIDHEIGHT = 6
 
 import { Player } from './Connect4'
 
-function playTurn(board: string[][], player: Player, row: number, col: number, power: string): void {
+function playTurn(board: string[][], player: Player, col: number, power: string): void {
   switch (power) {
     case '':
       playNormal(board, player, col)
       break
-    case 'pop':
-      popToken(board, row, col)
+    case 'Pop':
+      playPop(board, col)
       break
-    case 'wall':
+    case 'Wall':
       playWall(board, player, col)
       player.power.wall -= 1
       break
-    case 'anvil':
+    case 'Anvil':
       playAnvil(board, player, col)
       player.power.anvil -= 1
       break
-    case 'double':
+    case 'Double':
       playNormal(board, player, col)
       player.power.double -= 1
       break
-    case 'bomb':
-      popToken(board, row, col)
+    case 'Bomb':
+      playPop(board, col)
       player.power.bomb -= 1
       break
   }
@@ -45,7 +45,7 @@ function playNormal(board: string[][], player: Player, col: number) {
   }
 }
 
-function popToken(board: string[][], row: number, col: number) {
+function playPop(board: string[][], col: number) {
   // Remove the token.
   board[GRIDHEIGHT - 1][col] = " "
 

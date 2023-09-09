@@ -14,7 +14,7 @@
   display: grid;
   grid-template-columns: repeat(7, 150px);
   grid-template-rows: repeat(6, 150px);
-  grid-gap: 10px;
+  grid-gap: 3px;
   width: 1200px;
   height: 1000px;
   border: 2px solid #333;
@@ -27,7 +27,7 @@
   width: 152px;
   height: 920px;
   flex-direction: column;
-  gap: 5px;
+  gap: 1px;
 }
 
 .column-hover {
