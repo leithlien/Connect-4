@@ -1,6 +1,6 @@
 import { newGame, Player, printGrid } from '../../build/Connect4.js'
 import { playTurn } from '../../build/PlayTurn.js'
-import { checkWin } from '../../build/GameState.js'
+import { colIsFull, checkWin } from '../../build/GameState.js'
 
 const GRIDHEIGHT = 6
 const GRIDLENGTH = 7
@@ -42,11 +42,11 @@ function columnSetUp() {
   columns.forEach(e => {
     e.addEventListener('mouseenter', columnHover)
     e.addEventListener('mouseleave', columnHover)
-  })
+  })  
+}
 
-  function columnHover(event) {
-    event.target.classList.toggle('column-hover')
-  }
+function columnHover(event) {
+  event.target.classList.toggle('column-hover')
 }
 
 function cellSetUp() {
@@ -57,10 +57,10 @@ function cellSetUp() {
     e.addEventListener('mouseleave', cellHover)
     e.addEventListener('click', cellClick)
   })
+}
 
-  function cellHover(event) {
-    event.target.classList.toggle('cell-hover')
-  }
+function cellHover(event) {
+  event.target.classList.toggle('cell-hover')
 }
 
 function powerSetUp() {
@@ -103,6 +103,8 @@ function cellClick(event) {
   const column = document.querySelector(`div.column[data-col="${col}"]`)
   const cells = column.querySelectorAll('div')
 
+  //console.log(getEventListeners(column))
+
   cells.forEach(e => {
     const row = parseInt(e.dataset.row)
     const col = parseInt(e.dataset.col)
@@ -110,6 +112,18 @@ function cellClick(event) {
       console.log('winner')
     }
   })
+
+  if (colIsFull(board, col)) {
+    column.classList.toggle('column-hover')
+    column.removeEventListener('mouseenter', columnHover)
+    column.removeEventListener('mouseleave', columnHover)
+    cell.classList.toggle('cell-hover')
+    cells.forEach(e => {
+      e.removeEventListener('mouseenter', cellHover)
+      e.removeEventListener('mouseleave', cellHover)
+      e.removeEventListener('click', cellClick)
+    })
+  }
 
   if (power === '' || power === 'Pop') {
     player = player === player1 ? player2 : player1

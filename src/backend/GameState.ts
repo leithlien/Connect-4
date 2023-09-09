@@ -7,6 +7,15 @@ enum Direction {
   DOWNLEFT, DOWN, DOWNRIGHT
 }
 
+function colIsFull(board: string[][], col: number): boolean {
+  for (let i = 0; i < GRIDHEIGHT; i++) {
+    if (board[i][col] === '') {
+      return false
+    }
+  }
+  return true
+}
+
 function checkWin(board: string[][], row: number, col: number): boolean {
   if (board[row][col] === '') {
     return false
@@ -60,4 +69,4 @@ function recurseFour(board:string[][], row: number, col: number, player: string,
   return recurseFour(board, newRow, newCol, player, direction, streak)
 }
 
-export { checkWin }
+export { colIsFull, checkWin }

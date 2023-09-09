@@ -11,6 +11,14 @@ var Direction;
     Direction[Direction["DOWN"] = 6] = "DOWN";
     Direction[Direction["DOWNRIGHT"] = 7] = "DOWNRIGHT";
 })(Direction || (Direction = {}));
+function colIsFull(board, col) {
+    for (let i = 0; i < GRIDHEIGHT; i++) {
+        if (board[i][col] === '') {
+            return false;
+        }
+    }
+    return true;
+}
 function checkWin(board, row, col) {
     if (board[row][col] === '') {
         return false;
@@ -55,4 +63,4 @@ function recurseFour(board, row, col, player, direction, streak) {
     }
     return recurseFour(board, newRow, newCol, player, direction, streak);
 }
-export { checkWin };
+export { colIsFull, checkWin };
