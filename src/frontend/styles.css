@@ -24,10 +24,15 @@
 
 .column {
   display: flex;
-  width: 170px;
+  width: 152px;
   height: 920px;
   flex-direction: column;
   gap: 5px;
+}
+
+.column-hover {
+  background-color: #a1a1a1;
+  transition: 0.5s;
 }
 
 .cell {
@@ -41,6 +46,11 @@
   align-content: center;
   line-height: 150px;
   font-size: 50px;
+}
+
+.cell-hover {
+  background-color: #b1b1b1;
+  transform: 0.5s;
 }
 
 .power-up {
