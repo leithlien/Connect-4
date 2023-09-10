@@ -16,9 +16,18 @@ function colIsFull(board: string[][], col: number): boolean {
   return true
 }
 
-function checkWin(board: string[][], row: number, col: number): boolean {
+function colIsEmpty(board: string[][], col: number): boolean {
+  for (let i = 0; i < GRIDHEIGHT; i++) {
+    if (board[i][col] !== '') {
+      return false
+    }
+  }
+  return true
+}
+
+function checkWin(board: string[][], row: number, col: number): string {
   if (board[row][col] === '') {
-    return false
+    return ''
   }
 
   const player = board[row][col]
@@ -27,11 +36,11 @@ function checkWin(board: string[][], row: number, col: number): boolean {
   for (const key in Direction) {
     if (isNaN(Number(key))) {
       if (recurseFour(board, row, col, player, Direction[key as keyof typeof Direction], streak)) {
-        return true
+        return player
       }
     }
   }
-  return false
+  return ''
 }
 
 function recurseFour(board:string[][], row: number, col: number, player: string, direction: Direction, streak: number): boolean {
@@ -69,4 +78,4 @@ function recurseFour(board:string[][], row: number, col: number, player: string,
   return recurseFour(board, newRow, newCol, player, direction, streak)
 }
 
-export { colIsFull, checkWin }
+export { colIsFull, colIsEmpty, checkWin }

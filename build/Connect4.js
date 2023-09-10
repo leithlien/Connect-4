@@ -16,18 +16,19 @@ class Player {
 }
 function printGrid(board) {
     for (let i = 0; i < GRIDHEIGHT; i++) {
-        process.stdout.write("| ");
+        let str = '| ';
         for (let j = 0; j < GRIDLENGTH; j++) {
             if (board[i][j] === '') {
-                process.stdout.write('  ');
+                str += '  ';
             }
             else {
-                process.stdout.write(`${board[i][j]} `);
+                str += board[i][j] + ' ';
             }
         }
-        console.log("|");
+        str += '|';
+        console.info(str);
     }
-    console.log("-----------------");
-    console.log("--0-1-2-3-4-5-6--\n");
+    console.info("-----------------");
+    console.info("--0-1-2-3-4-5-6--\n");
 }
 export { newGame, Player, printGrid };
