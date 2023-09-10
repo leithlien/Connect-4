@@ -45,7 +45,6 @@ function columnSetUp() {
     e.addEventListener('mouseenter', columnHover)
     e.addEventListener('mouseleave', columnHover)
     e.addEventListener('click', columnClick)
-    e.addEventListener('click', columnInfoResponse)
   })  
 }
 
@@ -58,7 +57,7 @@ function powerSetUp() {
 
   powerUps.forEach(e => {
     e.addEventListener('click', powerUpClick)
-    e.addEventListener('click', columnInfoResponse)
+    e.addEventListener('click', updateColumnHover)
   });
 
   function powerUpClick(event) {
@@ -131,15 +130,15 @@ function columnClick(event) {
     })
   }
 
-  columnInfoResponse()
-
   if (power === '' || power === 'Pop') {
     player = player === player1 ? player2 : player1
+    const turnDiv = document.getElementById('whose-turn')
+    turnDiv.innerHTML = 'Turn = ' + player.token
   } {
     power = ''
   }
 
-  printGrid(board)
+  columnInfoResponse()
 }
 
 function columnInfoResponse() {
@@ -162,8 +161,10 @@ function updateColumnInfo() {
 function updateColumnHover() {
   if (power === '' || power == 'Wall' || power == 'Double') {
     playPieceResponse()
-  } else if (power === 'Pop' || power === 'Anvil' || power === 'Bomb') {
+  } else if (power === 'Pop' || power === 'Bomb') {
     playDestroyResponse()
+  } else if (power === 'Anvil') {
+    playAnvilResponse()
   }
 }
 
@@ -171,16 +172,9 @@ function playPieceResponse() {
   for (let i = 0; i < GRIDLENGTH; i++) {
     const column = document.querySelector(`div.column[data-col="${i}"]`)
     if (colIsFull(board, i)) {
-      if (column.classList.contains('column-hover')) {
-        column.classList.toggle('column-hover')
-      }
-      column.removeEventListener('mouseenter', columnHover)
-      column.removeEventListener('mouseleave', columnHover)
-      column.removeEventListener('click', columnClick)
+      colRemoveListeners(column)
     } else {
-      column.addEventListener('mouseenter', columnHover)
-      column.addEventListener('mouseleave', columnHover)
-      column.addEventListener('click', columnClick)
+      colAddListeners(column)
     }
   }
 }
@@ -189,16 +183,38 @@ function playDestroyResponse() {
   for (let i = 0; i < GRIDLENGTH; i++) {
     const column = document.querySelector(`div.column[data-col="${i}"]`)
     if (colIsEmpty(board, i)) {
-      if (column.classList.contains('column-hover')) {
-        column.classList.toggle('column-hover')
-      }
-      column.removeEventListener('mouseenter', columnHover)
-      column.removeEventListener('mouseleave', columnHover)
-      column.removeEventListener('click', columnClick)
+      colRemoveListeners(column)
     } else {
-      column.addEventListener('mouseenter', columnHover)
-      column.addEventListener('mouseleave', columnHover)
-      column.addEventListener('click', columnClick)
+      if (
+        (power === 'Pop' && board[GRIDHEIGHT - 1][i] === player.token) 
+        || (power === 'Bomb' && board[GRIDHEIGHT - 1][i] !== player.token)
+        ) {
+          colAddListeners(column)
+      } else {
+        colRemoveListeners(column)
+      }
     }
   }
+}
+
+function playAnvilResponse() {
+  for (let i = 0; i < GRIDLENGTH; i++) {
+    const column = document.querySelector(`div.column[data-col="${i}"]`)
+    colAddListeners(column)
+  }
+}
+
+function colAddListeners(column) {
+  column.addEventListener('mouseenter', columnHover)
+  column.addEventListener('mouseleave', columnHover)
+  column.addEventListener('click', columnClick)
+}
+
+function colRemoveListeners(column) {
+  if (column.classList.contains('column-hover')) {
+    column.classList.toggle('column-hover')
+  }
+  column.removeEventListener('mouseenter', columnHover)
+  column.removeEventListener('mouseleave', columnHover)
+  column.removeEventListener('click', columnClick)
 }
