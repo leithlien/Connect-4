@@ -12,10 +12,10 @@ class Player {
   constructor(token: string) {
     this.token = token
     this.power = {
-      wall: 1,
-      anvil: 1,
-      double: 1,
-      bomb: 1
+      Wall: 1,
+      Anvil: 1,
+      Double: 1,
+      Bomb: 1
     }
   }
 }

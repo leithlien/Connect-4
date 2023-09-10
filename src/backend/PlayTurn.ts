@@ -12,19 +12,19 @@ function playTurn(board: string[][], player: Player, col: number, power: string)
       break
     case 'Wall':
       playWall(board, player, col)
-      player.power.wall -= 1
+      player.power.Wall -= 1
       break
     case 'Anvil':
       playAnvil(board, player, col)
-      player.power.anvil -= 1
+      player.power.Anvil -= 1
       break
     case 'Double':
       playNormal(board, player, col)
-      player.power.double -= 1
+      player.power.Double -= 1
       break
     case 'Bomb':
       playPop(board, col)
-      player.power.bomb -= 1
+      player.power.Bomb -= 1
       break
   }
 }
@@ -62,12 +62,12 @@ function playWall(board: string[][], player: Player, col: number) {
 
     // Bottom row.
     if (i === GRIDHEIGHT - 1) {
-        board[i][col] = 'W';
+        board[i][col] = player.token + 'W';
         return;
     
     // Not bottom row.
     } else if (board[i + 1][col] !== '') {
-        board[i][col] = 'W';
+        board[i][col] = player.token + 'W';
         return;
     }
   }

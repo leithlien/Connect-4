@@ -10,6 +10,7 @@ const player1 = new Player('X')
 const player2 = new Player('O')
 let player = player1
 let power = ''
+let powerCd = 0
 const popup = document.getElementsByClassName('popup')[0]
 const popupContent = document.getElementsByClassName('popup-content')[0]
 
@@ -59,24 +60,28 @@ function powerSetUp() {
     e.addEventListener('click', powerUpClick)
     e.addEventListener('click', updateColumnHover)
   });
+}
 
-  function powerUpClick(event) {
-    const button = event.target
+function powerUpClick(event) {
+  const powerUps = document.querySelectorAll('.power-up')
+  const button = event.target
 
-    if (button.style.backgroundColor === 'rgb(255, 61, 61)') {
-      button.style.backgroundColor = 'initial'
-      power = ''
-    } else {
-      powerUps.forEach(e => {
-        e.style.backgroundColor = 'initial'
-      })
-      button.style.backgroundColor = 'rgb(255, 61, 61)'
-      power = button.innerHTML
-    }
+  if (button.style.backgroundColor === 'rgb(255, 61, 61)') {
+    button.style.backgroundColor = 'initial'
+    power = ''
+  } else {
+    powerUps.forEach(e => {
+      if (e.style.backgroundColor === 'rgb(255, 61, 61)')
+      e.style.backgroundColor = 'initial'
+    })
+    button.style.backgroundColor = 'rgb(255, 61, 61)'
+    power = button.innerHTML
   }
 }
 
 function columnClick(event) {
+  infoResponse()
+
   const column = event.currentTarget
   const col = parseInt(column.dataset.col)
 
@@ -134,11 +139,49 @@ function columnClick(event) {
     player = player === player1 ? player2 : player1
     const turnDiv = document.getElementById('whose-turn')
     turnDiv.innerHTML = 'Turn = ' + player.token
-  } {
+    powerCd = 0
+  } else {
     power = ''
+    powerCd = 1
   }
 
+  infoResponse()
+}
+
+function infoResponse() {
   columnInfoResponse()
+  powerInfoResponse()
+}
+
+function powerInfoResponse() {
+  const powerBtns = document.querySelectorAll('div.power-up')
+  for (const powerBtn of powerBtns) {
+    if (powerCd !== 1) {
+      powAddListeners(powerBtn)
+    }
+
+    if (
+      (powerBtn.innerHTML === 'Wall' && player.power['Wall'] !== 0)
+      || (powerBtn.innerHTML === 'Anvil' && player.power['Anvil'] !== 0)
+      || (powerBtn.innerHTML === 'Double' && player.power['Double'] !== 0)
+      || (powerBtn.innerHTML === 'Bomb' && player.power['Bomb'] !== 0)
+    ) {
+      powAddListeners(powerBtn)
+    }
+
+    if (
+      (powerBtn.innerHTML === 'Wall' && player.power['Wall'] === 0)
+      || (powerBtn.innerHTML === 'Anvil' && player.power['Anvil'] === 0)
+      || (powerBtn.innerHTML === 'Double' && player.power['Double'] === 0)
+      || (powerBtn.innerHTML === 'Bomb' && player.power['Bomb'] === 0)
+    ) {
+      powRemoveListeners(powerBtn)
+    }
+
+    if (powerCd === 1) {
+      powRemoveListeners(powerBtn)
+    }
+  }
 }
 
 function columnInfoResponse() {
@@ -217,4 +260,16 @@ function colRemoveListeners(column) {
   column.removeEventListener('mouseenter', columnHover)
   column.removeEventListener('mouseleave', columnHover)
   column.removeEventListener('click', columnClick)
+}
+
+function powAddListeners(power) {
+  power.style.backgroundColor = 'initial'
+  power.addEventListener('click', powerUpClick)
+  power.addEventListener('click', updateColumnHover)
+}
+
+function powRemoveListeners(power) {
+  power.style.backgroundColor = 'rgb(170, 170, 170)'
+  power.removeEventListener('click', powerUpClick)
+  power.removeEventListener('click', updateColumnHover)
 }

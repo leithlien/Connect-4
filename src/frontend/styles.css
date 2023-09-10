@@ -37,7 +37,7 @@
 
 .column-hover {
   background-color: #a1a1a1;
-  transition: 0.5s;
+  transition: 0.3s;
 }
 
 .cell {
@@ -46,7 +46,6 @@
   height: 150px;
   border: 1px solid #666;
   cursor: pointer;
-  transition: background-color 0.3s;
   justify-content: center;
   align-content: center;
   line-height: 150px;
@@ -66,7 +65,7 @@
 
 .power-up:hover {
   background-color: #a1a1a1;
-  transition: 0.5s;
+  transition: 0.3s;
 }
 
 #whose-turn {
